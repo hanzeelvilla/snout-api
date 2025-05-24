@@ -1,0 +1,10 @@
+# ENTRY POINT
+GET http://localhost:3000/
+
+# LOGIN
+GET http://localhost:3000/api/auth/login
+
+### 
+
+# SIGN UP
+GET http://localhost:3000/api/auth/sign-up

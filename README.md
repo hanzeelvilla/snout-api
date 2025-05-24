@@ -39,7 +39,7 @@ CREATE DATABASE snout;
 
 5. Crea un archivo `.env`
 ```text
-DATABASE_URL="mysql://user:pswd$@localhost:3306/snout"
+DATABASE_URL="mysql://user:pswd@localhost:3306/snout"
 ```
 
 > [!WARNING]

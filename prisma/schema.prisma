@@ -16,6 +16,7 @@ model User {
   password  String  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  mascotas  Mascota[]
 }
 
 model Especie {
@@ -42,6 +43,21 @@ model Avatar {
   url       String?  
   raza      Raza     @relation(fields: [razaId], references: [id])
   razaId    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  mascotas  Mascota[]
+
+  @@unique([razaId, color]) 
+}
+
+model Mascota {
+  id        String    @id @default(uuid())  
+  name      String
+  birthDate DateTime
+  avatarId  String
+  avatar    Avatar    @relation(fields: [avatarId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+  userId    String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }

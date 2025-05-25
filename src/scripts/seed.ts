@@ -3,11 +3,12 @@ import { PrismaClient } from "@prisma/client";
 export const prisma = new PrismaClient();
 
 async function main() {
-  // Especies
+  /* -------------------------------- Especies -------------------------------- */
   await prisma.especie.createMany({
     data: [{ name: "Perro" }, { name: "Gato" }],
   });
 
+  /* ---------------------------------- Razas --------------------------------- */
   const perro = await prisma.especie.findUnique({
     where: { name: "Perro" },
   });
@@ -19,7 +20,6 @@ async function main() {
     throw new Error("Required species not found in the database.");
   }
 
-  // Razas
   await prisma.raza.createMany({
     data: [
       { name: "Beagle", especieId: perro.id },
@@ -27,20 +27,47 @@ async function main() {
     ],
   });
 
+  /* -------------------------------- Avatares -------------------------------- */
   const husky = await prisma.raza.findUnique({
     where: { name: "Husky" },
   });
 
-  if (!husky) {
+  const beagle = await prisma.raza.findUnique({
+    where: { name: "Beagle" },
+  });
+
+  if (!husky || !beagle) {
     throw new Error("Required breed not found in the database.");
   }
 
-  // Avatares
   await prisma.avatar.createMany({
     data: [
-      { color: "Negro", razaId: husky.id },
+      { color: "Gris", razaId: husky.id },
       { color: "Café", razaId: husky.id },
+      { color: "Café", razaId: beagle.id },
     ],
+  });
+
+  /* -------------------------------- Mascotas -------------------------------- */
+  const walle = await prisma.user.findUnique({
+    where: { username: "walle" },
+  });
+
+  const beagleAvatar = await prisma.avatar.findUnique({
+    where: { razaId_color: { razaId: beagle.id, color: "Café" } },
+  });
+
+  if (!walle || !beagleAvatar) {
+    throw new Error("Required user or avatar not found in the database.");
+  }
+
+  await prisma.mascota.create({
+    data: {
+      name: "Viejon",
+      birthDate: new Date("2015-27-02"),
+      avatarId: beagleAvatar.id,
+      userId: walle.id,
+    },
   });
 }
 

@@ -26,6 +26,22 @@ async function main() {
       { name: "Husky", especieId: perro.id },
     ],
   });
+
+  const husky = await prisma.raza.findUnique({
+    where: { name: "Husky" },
+  });
+
+  if (!husky) {
+    throw new Error("Required breed not found in the database.");
+  }
+
+  // Avatares
+  await prisma.avatar.createMany({
+    data: [
+      { color: "Negro", razaId: husky.id },
+      { color: "Café", razaId: husky.id },
+    ],
+  });
 }
 
 main()

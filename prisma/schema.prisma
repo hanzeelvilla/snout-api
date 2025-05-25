@@ -19,7 +19,7 @@ model User {
 }
 
 model Especie {
-  id        String    @id @default(uuid())  
+  id        String      @id @default(uuid())  
   name      String    @unique
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -31,6 +31,17 @@ model Raza {
   name      String    @unique
   especie   Especie   @relation(fields: [especieId], references: [id])
   especieId String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  avatar     Avatar[]
+}
+
+model Avatar {
+  id        String    @id @default(uuid())  
+  color     String
+  url       String?  
+  raza      Raza     @relation(fields: [razaId], references: [id])
+  razaId    String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }

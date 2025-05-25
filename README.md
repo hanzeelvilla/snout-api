@@ -40,10 +40,12 @@ CREATE DATABASE snout;
 5. Crea un archivo `.env`
 ```text
 DATABASE_URL="mysql://user:pswd@localhost:3306/snout"
+PORT=3000
+JWT_SECRET="CHIVAS>PUMAS"
 ```
 
 > [!WARNING]
-> Recuerda cambiar tu username, pswd y alguna otra configuración necesaria
+> Recuerda cambiar tu username, pswd secret token y alguna otra configuración necesaria
 
 6. Aplica las migraciones de Prisma para crear las tablas automáticamente:
 

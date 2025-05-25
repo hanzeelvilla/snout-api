@@ -7,4 +7,14 @@ GET http://localhost:3000/api/auth/login
 ### 
 
 # SIGN UP
-GET http://localhost:3000/api/auth/sign-up
+POST http://localhost:3000/api/auth/sign-up
+Content-Type: application/json
+
+{
+    "name":     "Hanzeel",
+    "lastName": "Villa",
+    "email":    "hvilla0@ucol.mx",
+    "username": "Walle",
+    "password": "12345678",
+    "confirmPassword": "12345678"
+}

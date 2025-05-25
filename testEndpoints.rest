@@ -18,3 +18,14 @@ Content-Type: application/json
     "password": "12345678",
     "confirmPassword": "12345678"
 }
+
+### 
+
+# LOGIN
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "Walle",
+    "password": "12345678"
+}

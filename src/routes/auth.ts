@@ -1,11 +1,11 @@
-import {Router, Request, Response} from "express";
-import { singUpValidation } from "../middlewares/auth";
-import { signUp } from "../controllers/auth";
+import { Router, Request, Response } from "express";
+import { loginValidation, singUpValidation } from "../middlewares/auth";
+import { login, signUp } from "../controllers/auth";
 
 const router = Router();
 
-router.get("/login", (req: Request, res: Response) => {
-  res.send("Login");
+router.post("/login", loginValidation, (req: Request, res: Response) => {
+  login(req, res);
 });
 
 router.post("/sign-up", singUpValidation, (req: Request, res: Response) => {

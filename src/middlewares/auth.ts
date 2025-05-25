@@ -28,3 +28,27 @@ export function singUpValidation(
 
   next();
 }
+
+export function loginValidation(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  const loginSchema = Joi.object({
+    username: Joi.string().alphanum().min(3).max(30).required(),
+    password: Joi.string().min(8).max(30).required(),
+  });
+
+  const { error } = loginSchema.validate(req.body);
+
+  if (error) {
+    res.status(400).json({
+      message: "Validation error",
+      error: error.details[0].message,
+    });
+
+    return;
+  }
+
+  next();
+}

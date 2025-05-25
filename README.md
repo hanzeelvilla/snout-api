@@ -33,11 +33,13 @@ npm install
 ```
 
 4. Crea la base de datos si no existe
+
 ```sql
 CREATE DATABASE snout;
 ```
 
 5. Crea un archivo `.env`
+
 ```text
 DATABASE_URL="mysql://user:pswd@localhost:3306/snout"
 PORT=3000
@@ -56,7 +58,7 @@ npx prisma migrate deploy
 Esto leerá tu archivo [`prisma/schema.prisma`](prisma/schema.prisma) y aplicará las migraciones necesarias en la base de datos.
 
 > [!NOTE] Si es la primera vez que usas Prisma en el proyecto, también puedes generar el cliente Prisma con:
-> 
+>
 > ```bash
 > npx prisma generate
 > ```
@@ -67,3 +69,7 @@ Esto leerá tu archivo [`prisma/schema.prisma`](prisma/schema.prisma) y aplicar�
 npm run build
 npm run start
 ```
+
+## PROBAR LOS ENDPOINTS
+
+Si tienes la extensión [REST CLIENT](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) de VS Code, puedes probar los endpoints con dando clic en cada petición.

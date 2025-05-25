@@ -67,3 +67,31 @@ export async function createMascota(req: Request, res: Response) {
     });
   }
 }
+
+export async function getMascotaById(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    let userId: string | undefined;
+    if (typeof req.user === "object" && req.user !== null && "id" in req.user) {
+      userId = (req.user as { id: string }).id;
+    }
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const mascota = await prisma.mascota.findFirst({
+      where: { id, userId },
+    });
+
+    if (!mascota) {
+      return res.status(404).json({ message: "Mascota not found" });
+    }
+
+    res.status(200).json(mascota);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error fetching mascota",
+      error,
+    });
+  }
+}

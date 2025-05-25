@@ -8,10 +8,10 @@ POST http://localhost:3000/api/auth/sign-up
 Content-Type: application/json
 
 {
-    "name":     "Hanzeel",
-    "lastName": "Villa",
-    "email":    "hvilla0@ucol.mx",
-    "username": "Walle",
+    "name":     "Luis",
+    "lastName": "Corona",
+    "email":    "lcorona11@ucol.mx",
+    "username": "Invisible",
     "password": "12345678",
     "confirmPassword": "12345678"
 }
@@ -32,17 +32,23 @@ Content-Type: application/json
 # DEVOLVER MASCOTAS DEL USUARIO
 GET http://localhost:3000/api/mascotas
 Content-Type: application/json
-Authorization: Bearer YOUR_JWT_TOKEN_HERE
+Authorization: Bearer YOUR_JWT_TOKEN
 
+###
+
+# DEVOLVER MASCOTA POR ID
+GET http://localhost:3000/api/mascotas/99d3debc-c70e-4461-8a1c-9c204debbcca
+Content-Type: application/json
+Authorization: Bearer YOUR_JWT_TOKEN
 ###
 
 # CREAR UNA NUEVA MASCOTA
 POST http://localhost:3000/api/mascotas
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhMjExODg2LWQzZDQtNGQ1Yy04NTkyLWYxYTFkNzgzOTdkMSIsImVtYWlsIjoiaHZpbGxhMEB1Y29sLm14IiwiaWF0IjoxNzQ4MTUzOTE2LCJleHAiOjE3NDg3NTg3MTZ9.u0IHY1p9jcoqXBE8Ca-o9XeTXA7aRPysSZLv-ULGwTM
+Authorization: Bearer YOUR_JWT_TOKEN
 
 {
-    "name": "Viejon",
-    "birthDate": "2015-27-02",
-    "avatarId": "YOUR_AVATAR_ID_HERE"
+    "name": "Ody",
+    "birthDate": "2007-05-26",
+    "avatarId": "09d245f0-643b-4a40-8f4f-f3ddbb99abc8"
 }

@@ -15,8 +15,37 @@ export async function getMascotas(req: Request, res: Response) {
 
     const mascotas = await prisma.mascota.findMany({
       where: { userId },
+      include: {
+        avatar: {
+          select: {
+            url: true,
+            raza: {
+              select: {
+                name: true,
+                especie: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     });
-    res.status(200).json(mascotas);
+
+    const result = mascotas.map((mascota) => ({
+      id: mascota.id,
+      name: mascota.name,
+      birthDate: mascota.birthDate,
+      especie: mascota.avatar.raza.especie.name,
+      raza: mascota.avatar.raza.name,
+      urlAvatar: mascota.avatar.url,
+      updatedAt: mascota.updatedAt,
+      createdAt: mascota.createdAt,
+    }));
+
+    res.status(200).json(result);
   } catch (error) {
     res.status(500).json({
       message: "Error fetching mascotas",
@@ -36,16 +65,8 @@ export async function createMascota(req: Request, res: Response) {
     }
 
     const { name, birthDate, avatarId } = req.body;
-
     if (!name || !birthDate || !avatarId) {
       return res.status(400).json({ message: "Missing required fields" });
-    }
-
-    const avatar = await prisma.avatar.findUnique({
-      where: { id: avatarId },
-    });
-    if (!avatar) {
-      return res.status(404).json({ message: "Avatar not found" });
     }
 
     const birthDateObj = new Date(birthDate);
@@ -57,9 +78,37 @@ export async function createMascota(req: Request, res: Response) {
         avatarId,
         userId,
       },
+      include: {
+        avatar: {
+          select: {
+            url: true,
+            raza: {
+              select: {
+                name: true,
+                especie: {
+                  select: {
+                    name: true,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
     });
 
-    res.status(201).json(mascota);
+    const result = {
+      id: mascota.id,
+      name: mascota.name,
+      birthDate: mascota.birthDate,
+      especie: mascota.avatar.raza.especie.name,
+      raza: mascota.avatar.raza.name,
+      urlAvatar: mascota.avatar.url,
+      updatedAt: mascota.updatedAt,
+      createdAt: mascota.createdAt,
+    };
+
+    res.status(201).json(result);
   } catch (error) {
     res.status(500).json({
       message: "Error creating mascota",
@@ -81,13 +130,39 @@ export async function getMascotaById(req: Request, res: Response) {
 
     const mascota = await prisma.mascota.findFirst({
       where: { id, userId },
+      include: {
+        avatar: {
+          select: {
+            url: true,
+            raza: {
+              select: {
+                name: true,
+                especie: {
+                  select: { name: true },
+                },
+              },
+            },
+          },
+        },
+      },
     });
 
     if (!mascota) {
       return res.status(404).json({ message: "Mascota not found" });
     }
 
-    res.status(200).json(mascota);
+    const result = {
+      id: mascota.id,
+      name: mascota.name,
+      birthDate: mascota.birthDate,
+      especie: mascota.avatar.raza.especie.name,
+      raza: mascota.avatar.raza.name,
+      urlAvatar: mascota.avatar.url,
+      updatedAt: mascota.updatedAt,
+      createdAt: mascota.createdAt,
+    };
+
+    res.status(200).json(result);
   } catch (error) {
     res.status(500).json({
       message: "Error fetching mascota",
@@ -138,9 +213,35 @@ export async function updateMascota(req: Request, res: Response) {
         avatarId,
         userId,
       },
+      include: {
+        avatar: {
+          select: {
+            url: true,
+            raza: {
+              select: {
+                name: true,
+                especie: {
+                  select: { name: true },
+                },
+              },
+            },
+          },
+        },
+      },
     });
 
-    res.status(200).json(mascota);
+    const result = {
+      id: mascota.id,
+      name: mascota.name,
+      birthDate: mascota.birthDate,
+      especie: mascota.avatar.raza.especie.name,
+      raza: mascota.avatar.raza.name,
+      urlAvatar: mascota.avatar.url,
+      updatedAt: mascota.updatedAt,
+      createdAt: mascota.createdAt,
+    };
+
+    res.status(200).json(result);
   } catch (error) {
     res.status(500).json({
       message: "Error updating mascota",

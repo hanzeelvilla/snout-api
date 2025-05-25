@@ -32,38 +32,39 @@ Content-Type: application/json
 # DEVOLVER MASCOTAS DEL USUARIO
 GET http://localhost:3000/api/mascotas
 Content-Type: application/json
-Authorization: Bearer YOUR_JWT_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhMjExODg2LWQzZDQtNGQ1Yy04NTkyLWYxYTFkNzgzOTdkMSIsImVtYWlsIjoiaHZpbGxhMEB1Y29sLm14IiwiaWF0IjoxNzQ4MTk1Mjc3LCJleHAiOjE3NDg4MDAwNzd9.L11Q3ha4a3BCHmKfPUET9sMycQLdPjbZlpB5LhHgApE
 
 
 ###
 
 # DEVOLVER MASCOTA POR ID
-GET http://localhost:3000/api/mascotas/ID
+GET http://localhost:3000/api/mascotas/99d3debc-c70e-4461-8a1c-9c204debbcca
 Content-Type: application/json
-Authorization: Bearer YOUR_JWT_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhMjExODg2LWQzZDQtNGQ1Yy04NTkyLWYxYTFkNzgzOTdkMSIsImVtYWlsIjoiaHZpbGxhMEB1Y29sLm14IiwiaWF0IjoxNzQ4MTk1Mjc3LCJleHAiOjE3NDg4MDAwNzd9.L11Q3ha4a3BCHmKfPUET9sMycQLdPjbZlpB5LhHgApE
 ###
 
 # CREAR UNA NUEVA MASCOTA
 POST http://localhost:3000/api/mascotas
 Content-Type: application/json
-Authorization: Bearer YOUR_JWT_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhMjExODg2LWQzZDQtNGQ1Yy04NTkyLWYxYTFkNzgzOTdkMSIsImVtYWlsIjoiaHZpbGxhMEB1Y29sLm14IiwiaWF0IjoxNzQ4MTk1Mjc3LCJleHAiOjE3NDg4MDAwNzd9.L11Q3ha4a3BCHmKfPUET9sMycQLdPjbZlpB5LhHgApE
+
 {
-    "name": "Ody",
+    "name": "Ejemplo",
     "birthDate": "2007-05-26",
-    "avatarId": "AVATAR_ID",
+    "avatarId": "18762246-672e-4031-8a36-ba851820db39"
 }
 
 ###
 
 # ACTUALIZAR UNA MASCOTA
-PUT http://localhost:3000/api/mascotas/ID
+PUT http://localhost:3000/api/mascotas/ef6155d0-8457-4094-9cf1-29399a4bb95e
 Content-Type: application/json
-Authorization: Bearer YOUR_JWT_TOKEN
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhMjExODg2LWQzZDQtNGQ1Yy04NTkyLWYxYTFkNzgzOTdkMSIsImVtYWlsIjoiaHZpbGxhMEB1Y29sLm14IiwiaWF0IjoxNzQ4MTk1Mjc3LCJleHAiOjE3NDg4MDAwNzd9.L11Q3ha4a3BCHmKfPUET9sMycQLdPjbZlpB5LhHgApE
 
 {
-    "name": "Viejon",
+    "name": "Skoll",
     "birthDate": "2007-05-26",
-    "avatarId": "AVATAR_ID",
+    "avatarId": "18762246-672e-4031-8a36-ba851820db39"
 }
 
 ###

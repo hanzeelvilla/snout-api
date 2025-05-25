@@ -1,9 +1,6 @@
 # ENTRY POINT
 GET http://localhost:3000/
 
-# LOGIN
-GET http://localhost:3000/api/auth/login
-
 ### 
 
 # SIGN UP
@@ -29,3 +26,10 @@ Content-Type: application/json
     "username": "Walle",
     "password": "12345678"
 }
+
+###
+
+# DEVOLVER MASCOTAS DEL USUARIO
+GET http://localhost:3000/api/mascotas
+Content-Type: application/json
+Authorization: Bearer YOUR_JWT_TOKEN_HERE

@@ -70,6 +70,41 @@ npm run build
 npm run start
 ```
 
+## SCRIPTS
+
+Estos son los scripts útiles que puedes ejecutar en este proyecto:
+
+- **Levantar el servidor en modo desarrollo:**
+
+  ```bash
+  npm run dev
+  ```
+
+- **Construir el proyecto (TypeScript a JavaScript):**
+
+  ```bash
+  npm run build
+  ```
+
+- **Iniciar el servidor en producción:**
+
+  ```bash
+  npm run start
+  ```
+
+- **Popular la base de datos con datos de ejemplo:**
+
+  ```bash
+  npm run seed
+  ```
+
+- **Limpiar todas las tablas de la base de datos:**
+  ```bash
+  npm run clear
+  ```
+
+> Puedes modificar o agregar más scripts en la sección `"scripts"` de tu archivo `package.json`.
+
 ## PROBAR LOS ENDPOINTS
 
 Si tienes la extensión [REST CLIENT](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) de VS Code, puedes probar los endpoints con dando clic en cada petición.

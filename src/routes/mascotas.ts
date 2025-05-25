@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { verifyToken } from "../middlewares/auth";
-import { getMascotas, getMascotaById, createMascota } from "../controllers/mascotas";
+import { getMascotas, getMascotaById, createMascota, updateMascota } from "../controllers/mascotas";
 import { get } from "http";
 
 const router = Router();
@@ -15,6 +15,10 @@ router.get("/:id", verifyToken, (req: Request, res: Response) => {
 
 router.post("/", verifyToken, (req: Request, res: Response) => {
   createMascota(req, res);
+});
+
+router.put("/:id", verifyToken, (req: Request, res: Response) => {
+  updateMascota(req, res);
 });
 
 export default router;

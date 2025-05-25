@@ -1,7 +1,12 @@
 import { Router, Request, Response } from "express";
 import { verifyToken } from "../middlewares/auth";
-import { getMascotas, getMascotaById, createMascota, updateMascota } from "../controllers/mascotas";
-import { get } from "http";
+import {
+  getMascotas,
+  getMascotaById,
+  createMascota,
+  updateMascota,
+  deleteMascota,
+} from "../controllers/mascotas";
 
 const router = Router();
 
@@ -19,6 +24,10 @@ router.post("/", verifyToken, (req: Request, res: Response) => {
 
 router.put("/:id", verifyToken, (req: Request, res: Response) => {
   updateMascota(req, res);
+});
+
+router.delete("/:id", verifyToken, (req: Request, res: Response) => {
+  deleteMascota(req, res);
 });
 
 export default router;

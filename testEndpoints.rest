@@ -38,7 +38,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 ###
 
 # DEVOLVER MASCOTA POR ID
-GET http://localhost:3000/api/mascotas/99d3debc-c70e-4461-8a1c-9c204debbcca
+GET http://localhost:3000/api/mascotas/ID
 Content-Type: application/json
 Authorization: Bearer YOUR_JWT_TOKEN
 ###
@@ -47,22 +47,28 @@ Authorization: Bearer YOUR_JWT_TOKEN
 POST http://localhost:3000/api/mascotas
 Content-Type: application/json
 Authorization: Bearer YOUR_JWT_TOKEN
-
 {
     "name": "Ody",
     "birthDate": "2007-05-26",
-    "avatarId": "09d245f0-643b-4a40-8f4f-f3ddbb99abc8"
+    "avatarId": "AVATAR_ID",
 }
 
 ###
 
 # ACTUALIZAR UNA MASCOTA
-PUT http://localhost:3000/api/mascotas/99d3debc-c70e-4461-8a1c-9c204debbcca
+PUT http://localhost:3000/api/mascotas/ID
 Content-Type: application/json
 Authorization: Bearer YOUR_JWT_TOKEN
 
 {
     "name": "Viejon",
     "birthDate": "2007-05-26",
-    "avatarId": "09d245f0-643b-4a40-8f4f-f3ddbb99abc8"
+    "avatarId": "AVATAR_ID",
 }
+
+###
+
+# ELIMINAR UNA MASCOTA
+DELETE http://localhost:3000/api/mascotas/ID
+Content-Type: application/json
+Authorization: Bearer YOUR_JWT_TOKEN

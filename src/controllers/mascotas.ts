@@ -118,9 +118,7 @@ export async function updateMascota(req: Request, res: Response) {
       where: { id, userId },
     });
     if (!mascotaExistente) {
-      return res
-        .status(404)
-        .json({ message: "Mascota not found" });
+      return res.status(404).json({ message: "Mascota not found" });
     }
 
     const avatar = await prisma.avatar.findUnique({
@@ -146,6 +144,38 @@ export async function updateMascota(req: Request, res: Response) {
   } catch (error) {
     res.status(500).json({
       message: "Error updating mascota",
+      error,
+    });
+  }
+}
+
+export async function deleteMascota(req: Request, res: Response) {
+  try {
+    const { id } = req.params;
+    let userId: string | undefined;
+    if (typeof req.user === "object" && req.user !== null && "id" in req.user) {
+      userId = (req.user as { id: string }).id;
+    }
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    // Verifica que la mascota pertenezca al usuario
+    const mascotaExistente = await prisma.mascota.findFirst({
+      where: { id, userId },
+    });
+    if (!mascotaExistente) {
+      return res.status(404).json({ message: "Mascota not found" });
+    }
+
+    await prisma.mascota.delete({
+      where: { id },
+    });
+
+    res.status(204).json({ message: "Mascota deleted successfully" });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error deleting mascota",
       error,
     });
   }

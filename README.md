@@ -105,6 +105,78 @@ Estos son los scripts útiles que puedes ejecutar en este proyecto:
 
 > Puedes modificar o agregar más scripts en la sección `"scripts"` de tu archivo `package.json`.
 
+## ENDPOINTS
+
+Endpoints principales de la API:
+
+### Autenticación
+
+- **Registro de usuario**
+
+  ```
+  POST /api/auth/sign-up
+  ```
+
+  Crea un nuevo usuario. Requiere: `name`, `lastName`, `email`, `username`, `password`, `confirmPassword`.
+
+- **Login**
+  ```
+  POST /api/auth/login
+  ```
+  Inicia sesión y devuelve un JWT. Requiere: `username`, `password`.
+
+---
+
+### Mascotas
+
+- **Obtener todas las mascotas del usuario autenticado**
+
+  ```
+  GET /api/mascotas
+  ```
+
+  Requiere autenticación (JWT en header `Authorization`).
+
+- **Obtener una mascota por ID (solo si es tuya)**
+
+  ```
+  GET /api/mascotas/:id
+  ```
+
+  Requiere autenticación.
+
+- **Crear una nueva mascota**
+
+  ```
+  POST /api/mascotas
+  ```
+
+  Requiere autenticación. Campos: `name`, `birthDate` (YYYY-MM-DD), `avatarId`.
+
+- **Actualizar una mascota (solo si es tuya)**
+
+  ```
+  PUT /api/mascotas/:id
+  ```
+
+  Requiere autenticación. Solo el dueño puede actualizar.
+
+- **Eliminar una mascota (solo si es tuya)**
+  ```
+  DELETE /api/mascotas/:id
+  ```
+  Requiere autenticación. Solo el dueño puede eliminar.
+
+---
+
+> Todos los endpoints que requieren autenticación deben incluir el header:
+>
+> ```
+> Authorization: Bearer TU_JWT_TOKEN
+> ```
+
+Consulta el archivo `testEndpoints.rest` para ejemplos de uso con la extensión REST Client.
+
 ## PROBAR LOS ENDPOINTS
 
 Si tienes la extensión [REST CLIENT](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) de VS Code, puedes probar los endpoints con dando clic en cada petición.

@@ -33,3 +33,16 @@ Content-Type: application/json
 GET http://localhost:3000/api/mascotas
 Content-Type: application/json
 Authorization: Bearer YOUR_JWT_TOKEN_HERE
+
+###
+
+# CREAR UNA NUEVA MASCOTA
+POST http://localhost:3000/api/mascotas
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjRhMjExODg2LWQzZDQtNGQ1Yy04NTkyLWYxYTFkNzgzOTdkMSIsImVtYWlsIjoiaHZpbGxhMEB1Y29sLm14IiwiaWF0IjoxNzQ4MTUzOTE2LCJleHAiOjE3NDg3NTg3MTZ9.u0IHY1p9jcoqXBE8Ca-o9XeTXA7aRPysSZLv-ULGwTM
+
+{
+    "name": "Viejon",
+    "birthDate": "2015-27-02",
+    "avatarId": "YOUR_AVATAR_ID_HERE"
+}

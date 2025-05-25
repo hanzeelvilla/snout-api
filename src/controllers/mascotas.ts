@@ -24,3 +24,46 @@ export async function getMascotas(req: Request, res: Response) {
     });
   }
 }
+
+export async function createMascota(req: Request, res: Response) {
+  try {
+    let userId: string | undefined;
+    if (typeof req.user === "object" && req.user !== null && "id" in req.user) {
+      userId = (req.user as { id: string }).id;
+    }
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const { name, birthDate, avatarId } = req.body;
+
+    if (!name || !birthDate || !avatarId) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    const avatar = await prisma.avatar.findUnique({
+      where: { id: avatarId },
+    });
+    if (!avatar) {
+      return res.status(404).json({ message: "Avatar not found" });
+    }
+
+    const birthDateObj = new Date(birthDate);
+
+    const mascota = await prisma.mascota.create({
+      data: {
+        name,
+        birthDate: birthDateObj,
+        avatarId,
+        userId,
+      },
+    });
+
+    res.status(201).json(mascota);
+  } catch (error) {
+    res.status(500).json({
+      message: "Error creating mascota",
+      error,
+    });
+  }
+}

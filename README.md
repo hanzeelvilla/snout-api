@@ -52,7 +52,7 @@ JWT_SECRET="CHIVAS>PUMAS"
 6. Aplica las migraciones de Prisma para crear las tablas automáticamente:
 
 ```bash
-npx prisma migrate deploy
+npx prisma migrate dev
 ```
 
 Esto leerá tu archivo [`prisma/schema.prisma`](prisma/schema.prisma) y aplicará las migraciones necesarias en la base de datos.

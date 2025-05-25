@@ -23,4 +23,14 @@ model Especie {
   name      String    @unique
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  raza      Raza[]
+}
+
+model Raza {
+  id        String    @id @default(uuid())  
+  name      String    @unique
+  especie   Especie   @relation(fields: [especieId], references: [id])
+  especieId String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }

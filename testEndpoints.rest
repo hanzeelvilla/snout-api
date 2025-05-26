@@ -72,3 +72,10 @@ Authorization: Bearer YOUR_JWT_TOKEN
 DELETE http://localhost:3000/api/mascotas/ID
 Content-Type: application/json
 Authorization: Bearer YOUR_JWT_TOKEN
+
+###
+
+# DEVOLVER AVATARES
+GET http://localhost:3000/api/avatares
+Content-Type: application/json
+Authorization: Bearer YOUR_JWT_TOKEN

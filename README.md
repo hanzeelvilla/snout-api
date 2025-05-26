@@ -169,6 +169,14 @@ Endpoints principales de la API:
 
 ---
 
+### Avatares
+
+- **Obtener todos los avatares (ordenados alfabéticamente)**
+  ```
+  GET /api/avatares
+  ```
+  Requiere autenticación.
+
 > Todos los endpoints que requieren autenticación deben incluir el header:
 >
 > ```

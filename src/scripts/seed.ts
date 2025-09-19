@@ -1,10 +1,21 @@
 import { PrismaClient } from "@prisma/client";
-import { url } from "inspector";
 export const prisma = new PrismaClient();
+
+interface Especie {
+  name: string
+}
+
+const perro: Especie = {
+  name: "Perro"
+}
+
+const gato: Especie = {
+  name: "Gato"
+}
 
 async function main() {
   // Especies
-  const especies = [{ name: "Perro" }, { name: "Gato" }];
+  const especies: Especie[] = [perro, gato];
   await prisma.especie.createMany({ data: especies, skipDuplicates: true });
 
   // Razas

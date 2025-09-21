@@ -8,7 +8,7 @@ datasource db {
 }
 
 model User {
-  id        String  @id @default(uuid())  
+  id        String   @id @default(uuid())  
   name      String
   lastName  String
   email     String   @unique
@@ -16,21 +16,21 @@ model User {
   password  String  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  mascotas  Mascota[]
+  mascotas  Pet[]
 }
 
-model Especie {
-  id        String      @id @default(uuid())  
+model Specie {
+  id        String    @id @default(uuid())  
   name      String    @unique
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  raza      Raza[]
+  raza      Race[]
 }
 
-model Raza {
+model Race {
   id        String    @id @default(uuid())  
   name      String    @unique
-  especie   Especie   @relation(fields: [especieId], references: [id])
+  especie   Specie    @relation(fields: [especieId], references: [id])
   especieId String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -41,16 +41,16 @@ model Avatar {
   id        String    @id @default(uuid())  
   color     String
   url       String?  
-  raza      Raza     @relation(fields: [razaId], references: [id])
+  raza      Race      @relation(fields: [razaId], references: [id])
   razaId    String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  mascotas  Mascota[]
+  mascotas  Pet[]
 
   @@unique([razaId, color]) 
 }
 
-model Mascota {
+model Pet {
   id        String    @id @default(uuid())  
   name      String
   birthDate DateTime

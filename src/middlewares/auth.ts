@@ -7,7 +7,7 @@ const signUpSchema = Joi.object({
   lastName: Joi.string().min(3).max(30).required(),
   email: Joi.string().email().required(),
   username: Joi.string().alphanum().min(3).max(30).required(),
-  password: Joi.string().min(8).max(30).required(),
+  password: Joi.string().min(8).max(30).regex(/(?=.*[A-Z])(?=.*[0-9])(?=.*[!$#&@%])/).required(),
   confirmPassword: Joi.string().valid(Joi.ref("password")).required(),
 });
 
@@ -56,6 +56,7 @@ export function loginValidation(
 
 export function verifyToken(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
+  console.log(authHeader)
   const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {

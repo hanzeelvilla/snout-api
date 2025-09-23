@@ -79,3 +79,8 @@ Authorization: Bearer YOUR_JWT_TOKEN
 GET http://localhost:3000/api/avatares
 Content-Type: application/json
 Authorization: Bearer YOUR_JWT_TOKEN
+
+## GET USER REMINDERS
+GET http://localhost:3000/api/reminders
+Content-Type: application/json
+Authorization: Bearer YOUR_JWT_TOKEN

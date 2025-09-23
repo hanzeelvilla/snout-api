@@ -1,8 +1,9 @@
 import { Router, Request, Response } from "express";
+import { verifyToken } from "../middlewares/auth";
 
 const router = Router();
 
-router.get("/", (req: Request, res: Response) => {
+router.get("/", verifyToken, (req: Request, res: Response) => {
     res.send("Hola soy Reminders");
 })
 

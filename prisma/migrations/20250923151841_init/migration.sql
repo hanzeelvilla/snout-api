@@ -29,7 +29,7 @@ CREATE TABLE `Specie` (
 CREATE TABLE `Race` (
     `id` VARCHAR(191) NOT NULL,
     `name` VARCHAR(191) NOT NULL,
-    `especieId` VARCHAR(191) NOT NULL,
+    `specieId` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
@@ -42,11 +42,11 @@ CREATE TABLE `Avatar` (
     `id` VARCHAR(191) NOT NULL,
     `color` VARCHAR(191) NOT NULL,
     `url` VARCHAR(191) NULL,
-    `razaId` VARCHAR(191) NOT NULL,
+    `raceId` VARCHAR(191) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
 
-    UNIQUE INDEX `Avatar_razaId_color_key`(`razaId`, `color`),
+    UNIQUE INDEX `Avatar_raceId_color_key`(`raceId`, `color`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -63,14 +63,30 @@ CREATE TABLE `Pet` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- AddForeignKey
-ALTER TABLE `Race` ADD CONSTRAINT `Race_especieId_fkey` FOREIGN KEY (`especieId`) REFERENCES `Specie`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateTable
+CREATE TABLE `Reminder` (
+    `id` VARCHAR(191) NOT NULL,
+    `title` VARCHAR(191) NOT NULL,
+    `description` VARCHAR(191) NOT NULL,
+    `dueDate` DATETIME(3) NOT NULL,
+    `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
+    `updatedAt` DATETIME(3) NOT NULL,
+    `userId` VARCHAR(191) NOT NULL,
+
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `Avatar` ADD CONSTRAINT `Avatar_razaId_fkey` FOREIGN KEY (`razaId`) REFERENCES `Race`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `Race` ADD CONSTRAINT `Race_specieId_fkey` FOREIGN KEY (`specieId`) REFERENCES `Specie`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Avatar` ADD CONSTRAINT `Avatar_raceId_fkey` FOREIGN KEY (`raceId`) REFERENCES `Race`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Pet` ADD CONSTRAINT `Pet_avatarId_fkey` FOREIGN KEY (`avatarId`) REFERENCES `Avatar`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE `Pet` ADD CONSTRAINT `Pet_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `Reminder` ADD CONSTRAINT `Reminder_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `User`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -8,15 +8,16 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())  
+  id        String      @id @default(uuid())  
   name      String
   lastName  String
-  email     String   @unique
-  username  String   @unique
+  email     String      @unique
+  username  String      @unique
   password  String  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  mascotas  Pet[]
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  pets      Pet[]
+  reminders Reminder[]
 }
 
 model Specie {
@@ -24,14 +25,14 @@ model Specie {
   name      String    @unique
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  raza      Race[]
+  race      Race[]
 }
 
 model Race {
   id        String    @id @default(uuid())  
   name      String    @unique
-  especie   Specie    @relation(fields: [especieId], references: [id])
-  especieId String
+  specie   Specie     @relation(fields: [specieId], references: [id])
+  specieId String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   avatar     Avatar[]
@@ -41,13 +42,13 @@ model Avatar {
   id        String    @id @default(uuid())  
   color     String
   url       String?  
-  raza      Race      @relation(fields: [razaId], references: [id])
-  razaId    String
+  race      Race      @relation(fields: [raceId], references: [id])
+  raceId    String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  mascotas  Pet[]
+  pets  Pet[]
 
-  @@unique([razaId, color]) 
+  @@unique([raceId, color]) 
 }
 
 model Pet {
@@ -60,4 +61,15 @@ model Pet {
   userId    String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+}
+
+model Reminder {
+  id          String  @id @default(uuid())
+  title       String
+  description String
+  dueDate     DateTime
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
 }

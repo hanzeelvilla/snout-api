@@ -15,7 +15,7 @@ export async function getReminders(req: Request, res: Response) {
         return res.status(200).json(reminders);
     }
     catch(err) {
-        res.status(500).json({
+        return res.status(500).json({
             message: "Error fetching reminders",
             err
         });
@@ -49,7 +49,7 @@ export async function createReminder(req: Request, res: Response) {
         return res.status(201).json(reminder);
     }
     catch(err) {
-        res.status(500).json({
+        return res.status(500).json({
             message: "Error creating reminder",
             err
         });
@@ -60,7 +60,11 @@ export async function updateReminder(req: Request, res: Response) {
     try {
         const { id: reminderId } = req.params;
         const { id: userId } = req.user as JwtPayload;
-        
+        const { title, description, dueDate } = req.body;
+
+        if(!title || !description || !dueDate)
+            return res.status(400).json({message: "Missing required fields"});
+
         // Validate if the reminder exists and if it's from the same user
         const existingReminder = await prisma.reminder.findFirst({
             where: { id: reminderId, userId }
@@ -69,11 +73,20 @@ export async function updateReminder(req: Request, res: Response) {
         if(!existingReminder)
            return res.status(404).json({message: "Reminder not found"});
 
-        res.json({existingReminder})
+        const updatedReminder = await prisma.reminder.update({
+            where: {id: reminderId},
+            data: {
+                title,
+                description,
+                dueDate
+            }
+        })
+        
+        return res.status(200).json(updatedReminder);
 
     }
     catch(err) {
-        res.status(500).json({
+        return res.status(500).json({
             message: "Error updating reminder",
             err
         });

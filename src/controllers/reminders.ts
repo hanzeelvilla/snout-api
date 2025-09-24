@@ -66,7 +66,8 @@ export async function updateReminder(req: Request, res: Response) {
             return res.status(400).json({message: "Missing required fields"});
 
         // Validate if the reminder exists and if it's from the same user
-        const existingReminder = await prisma.reminder.findFirst({
+        // It could be better though
+        const existingReminder = await prisma.reminder.findUnique({
             where: { id: reminderId, userId }
         });
         
@@ -74,7 +75,7 @@ export async function updateReminder(req: Request, res: Response) {
            return res.status(404).json({message: "Reminder not found"});
 
         const updatedReminder = await prisma.reminder.update({
-            where: {id: reminderId},
+            where: {id: reminderId, userId},
             data: {
                 title,
                 description,
@@ -88,6 +89,33 @@ export async function updateReminder(req: Request, res: Response) {
     catch(err) {
         return res.status(500).json({
             message: "Error updating reminder",
+            err
+        });
+    }
+}
+
+export async function deleteReminder(req: Request, res: Response) {
+    try {
+        const { id: reminderId } = req.params;
+        const { id: userId } = req.user as JwtPayload;
+
+        // It could be better though
+        const existingReminder = await prisma.reminder.findUnique({
+            where: { id: reminderId, userId }
+        });
+        
+        if(!existingReminder)
+            return res.status(404).json({message: "Reminder not found"});
+
+        await prisma.reminder.delete({
+            where: {id: reminderId, userId}
+        })
+
+        return res.status(204).end();
+    }
+    catch(err) {
+        return res.status(500).json({
+            message: "Error deleting reminder",
             err
         });
     }

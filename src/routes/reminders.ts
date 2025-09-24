@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { verifyToken } from "../middlewares/auth";
-import { createReminder, getReminders, updateReminder } from "../controllers/reminders";
+import { createReminder, deleteReminder, getReminders, updateReminder } from "../controllers/reminders";
 
 const router = Router();
 
@@ -14,6 +14,10 @@ router.post("/", verifyToken, (req: Request, res: Response) => {
 
 router.put("/:id", verifyToken, (req: Request, res: Response) => {
     updateReminder(req, res);
+})
+
+router.delete("/:id", verifyToken, (req: Request, res: Response) => {
+    deleteReminder(req, res);
 })
 
 export default router;

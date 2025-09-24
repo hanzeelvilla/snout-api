@@ -31,8 +31,8 @@ model Specie {
 model Race {
   id        String    @id @default(uuid())  
   name      String    @unique
-  specie   Specie     @relation(fields: [specieId], references: [id])
-  specieId String
+  specie    Specie     @relation(fields: [specieId], references: [id])
+  specieId  String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   avatar     Avatar[]

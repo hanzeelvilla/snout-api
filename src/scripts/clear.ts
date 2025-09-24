@@ -3,12 +3,13 @@ const prisma = new PrismaClient();
 
 async function main() {
   
-  await prisma.mascota.deleteMany();
+  await prisma.pet.deleteMany();
   await prisma.avatar.deleteMany();
-  await prisma.raza.deleteMany();
-  await prisma.especie.deleteMany();
+  await prisma.race.deleteMany();
+  await prisma.specie.deleteMany();
+  await prisma.reminder.deleteMany();
   await prisma.user.deleteMany();
-  
+
   console.log("All data deleted");
 }
 

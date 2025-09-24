@@ -32,9 +32,8 @@ export async function createReminder(req: Request, res: Response) {
 
         const dueDateObj = new Date(dueDate);
         const now = new Date();
-        console.log(now)
 
-        // 
+        // Validate the date 
         if(dueDateObj < now)
             return res.status(400).json({message: "Due date cannot be in the past"});
 
@@ -53,6 +52,30 @@ export async function createReminder(req: Request, res: Response) {
         res.status(500).json({
             message: "Error creating reminder",
             err
-        })
+        });
+    }
+}
+
+export async function updateReminder(req: Request, res: Response) {
+    try {
+        const { id: reminderId } = req.params;
+        const { id: userId } = req.user as JwtPayload;
+        
+        // Validate if the reminder exists and if it's from the same user
+        const existingReminder = await prisma.reminder.findFirst({
+            where: { id: reminderId, userId }
+        });
+        
+        if(!existingReminder)
+           return res.status(404).json({message: "Reminder not found"});
+
+        res.json({existingReminder})
+
+    }
+    catch(err) {
+        res.status(500).json({
+            message: "Error updating reminder",
+            err
+        });
     }
 }

@@ -31,11 +31,11 @@ model Specie {
 model Race {
   id        String    @id @default(uuid())  
   name      String    @unique
-  specie    Specie     @relation(fields: [specieId], references: [id])
+  specie    Specie    @relation(fields: [specieId], references: [id])
   specieId  String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  avatar     Avatar[]
+  avatar    Avatar[]
 }
 
 model Avatar {
@@ -46,7 +46,7 @@ model Avatar {
   raceId    String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  pets  Pet[]
+  pets      Pet[]
 
   @@unique([raceId, color]) 
 }
@@ -64,7 +64,7 @@ model Pet {
 }
 
 model Reminder {
-  id          String  @id @default(uuid())
+  id          String    @id @default(uuid())
   title       String
   description String
   dueDate     DateTime

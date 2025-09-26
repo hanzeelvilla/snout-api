@@ -1,9 +1,9 @@
-import expess, { Request, Response } from "express";
+import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 import router from "./routes/index";
 
-const app = expess();
-app.use(expess.json());
+const app = express();
+app.use(express.json());
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;

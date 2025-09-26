@@ -9,7 +9,8 @@ export async function getReminders(req: Request, res: Response) {
         const { id:  userId} = req.user as JwtPayload;
 
         const reminders = await prisma.reminder.findMany({
-            where: { userId }
+            where: { userId },
+            orderBy: [{ dueDate: "asc" }]
         })
 
         return res.status(200).json(reminders);

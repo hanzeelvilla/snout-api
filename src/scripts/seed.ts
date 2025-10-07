@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 export const prisma = new PrismaClient();
+import bcrypt from "bcrypt";
 
 interface Specie {
   name: string
@@ -229,7 +230,21 @@ async function main() {
       url: "https://drive.google.com/file/d/11yXnDEeo6EK2fb99rGEGCq6o4BwHhzTx/view?usp=drive_link",
     },
   ];
+
   await prisma.avatar.createMany({ data: avatares, skipDuplicates: true });
+
+  const pswd = "secretPswd_1234";
+  const hashedPassword = await bcrypt.hash(pswd, 10);
+
+  const person1 = {
+    name: "Hanzeel",
+    lastName: "Villa",
+    email: "testemail@gmail.com",
+    username: "Walle",
+    password: hashedPassword
+  }
+
+  await prisma.user.create({data: person1});
 }
 
 main()

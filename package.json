@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "tsx src/scripts/seed.ts",
     "migrate:dev": "npx prisma migrate dev",
-    "clear": "tsx src/scripts/clear.ts",
+    "clearDB": "tsx src/scripts/clear.ts",
     "dev": "tsx watch src/app.ts",
     "build": "tsc",
     "start": "node build/app.js"

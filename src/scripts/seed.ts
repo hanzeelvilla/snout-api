@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 export const prisma = new PrismaClient();
 import bcrypt from "bcrypt";
 
+/* ------------------------------- INTERFACES ------------------------------- */
+
 interface Specie {
   name: string
 }
@@ -14,12 +16,30 @@ const gato: Specie = {
   name: "Gato"
 }
 
+interface User {
+  name: string,
+  lastName: string,
+  email: string,
+  username: string,
+  password: string
+}
+
+interface Reminder {
+  title: string,
+  description?: string,
+  dueDate: Date,
+  userId: string
+}
+
 async function main() {
-  // Especies
+  
+  /* ----------------------------- INSERT SPECIES ----------------------------- */
+
   const species: Specie[] = [perro, gato];
   await prisma.specie.createMany({ data: species, skipDuplicates: true });
 
-  // Razas
+  /* ------------------------------ INSERT RACES ------------------------------ */
+
   const especiesDb = await prisma.specie.findMany();
   const especieMap = Object.fromEntries(especiesDb.map((e) => [e.name, e.id]));
   const races = [
@@ -55,7 +75,8 @@ async function main() {
   ];
   await prisma.race.createMany({ data: races, skipDuplicates: true });
 
-  // Avatares
+  /* ----------------------------- INSERT AVATARS ----------------------------- */
+
   const razasDb = await prisma.race.findMany();
   const razaMap = Object.fromEntries(razasDb.map((r) => [r.name, r.id]));
   const avatares = [
@@ -233,10 +254,12 @@ async function main() {
 
   await prisma.avatar.createMany({ data: avatares, skipDuplicates: true });
 
+  /* ------------------------------ INSERT USERS ------------------------------ */
+
   const pswd = "secretPswd_1234";
   const hashedPassword = await bcrypt.hash(pswd, 10);
 
-  const person1 = {
+  const user1: User = {
     name: "Hanzeel",
     lastName: "Villa",
     email: "testemail@gmail.com",
@@ -244,7 +267,15 @@ async function main() {
     password: hashedPassword
   }
 
-  await prisma.user.create({data: person1});
+  await prisma.user.create({data: user1});
+}
+
+/* ---------------------------- INSERT REMINDERS ---------------------------- */
+
+const reminder1: Reminder = {
+  title: "Sacar a pasear al Viejon",
+  dueDate: new Date(),
+  userId: ""
 }
 
 main()

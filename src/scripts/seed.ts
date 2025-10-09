@@ -1,6 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-export const prisma = new PrismaClient();
 import bcrypt from "bcrypt";
+import prisma from "../prisma-client"
 
 /* ------------------------------- INTERFACES ------------------------------- */
 
@@ -32,7 +31,7 @@ interface Reminder {
 }
 
 async function main() {
-  
+
   /* ----------------------------- INSERT SPECIES ----------------------------- */
 
   const species: Specie[] = [perro, gato];
@@ -267,16 +266,55 @@ async function main() {
     password: hashedPassword
   }
 
-  await prisma.user.create({data: user1});
+  const user2: User = {
+    name: "Luis",
+    lastName: "Corona",
+    email: "testemail2@gmail.com",
+    username: "Invisiblre",
+    password: hashedPassword
+  }
+
+  const createdUser1 = await prisma.user.create({ data: user1 });
+  const createdUser2 = await prisma.user.create({ data: user2 });
+
+  /* ---------------------------- INSERT REMINDERS ---------------------------- */
+
+  const userId1 = createdUser1.id;
+  const userId2 = createdUser2.id;
+
+  const mydueDate1 = new Date("2026-11-31T10:00")
+  const mydueDate2 = new Date("2026-12-31T10:00")
+
+  const reminder1: Reminder = {
+    title: "Sacar a pasear al Viejon",
+    dueDate: mydueDate1,
+    userId: userId1
+  }
+
+  const reminder2: Reminder = {
+    title: "Llevar al vete al Viejon",
+    description: "Desparacitación",
+    dueDate: mydueDate2,
+    userId: userId1
+  }
+
+  const reminder3: Reminder = {
+    title: "Sacar a pasear a Candy",
+    dueDate: mydueDate1,
+    userId: userId2
+  }
+
+  const reminder4: Reminder = {
+    title: "Llevar al vete a Candy",
+    description: "Desparacitación",
+    dueDate: mydueDate2,
+    userId: userId2
+  }
+
+  await prisma.reminder.createMany({ data: [reminder1, reminder2, reminder3, reminder4] });
 }
 
-/* ---------------------------- INSERT REMINDERS ---------------------------- */
 
-const reminder1: Reminder = {
-  title: "Sacar a pasear al Viejon",
-  dueDate: new Date(),
-  userId: ""
-}
 
 main()
   .then(() => {

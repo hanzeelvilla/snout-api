@@ -7,20 +7,19 @@ interface Specie {
   name: string
 }
 
-const perro: Specie = {
-  name: "Perro"
-}
-
-const gato: Specie = {
-  name: "Gato"
-}
-
 interface User {
   name: string,
   lastName: string,
   email: string,
   username: string,
   password: string
+}
+
+interface Pet {
+  name: string,
+  birthDate: Date,
+  avatarId: string,
+  userId: string,
 }
 
 interface Reminder {
@@ -33,6 +32,14 @@ interface Reminder {
 async function main() {
 
   /* ----------------------------- INSERT SPECIES ----------------------------- */
+
+  const perro: Specie = {
+  name: "Perro"
+}
+
+const gato: Specie = {
+  name: "Gato"
+}
 
   const species: Specie[] = [perro, gato];
   await prisma.specie.createMany({ data: species, skipDuplicates: true });
@@ -277,6 +284,31 @@ async function main() {
   const createdUser1 = await prisma.user.create({ data: user1 });
   const createdUser2 = await prisma.user.create({ data: user2 });
 
+  /* ------------------------------- INSER PETS ------------------------------- */
+
+  const birthDatePet1 = new Date("2015-02-27");
+  const beagleAvatar = await prisma.specie.findUnique({
+    where: {
+      name: "Beagle"
+    },
+    include: {
+      race: {
+        include: {
+          avatar: true
+        }
+      }
+    }
+  });
+
+  console.log(beagleAvatar);
+
+  const pe1: Pet = {
+    name: "Viejon",
+    birthDate: birthDatePet1,
+    avatarId: "",
+    userId: ""
+  }
+
   /* ---------------------------- INSERT REMINDERS ---------------------------- */
 
   const userId1 = createdUser1.id;
@@ -313,7 +345,6 @@ async function main() {
 
   await prisma.reminder.createMany({ data: [reminder1, reminder2, reminder3, reminder4] });
 }
-
 
 
 main()

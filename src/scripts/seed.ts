@@ -34,12 +34,12 @@ async function main() {
   /* ----------------------------- INSERT SPECIES ----------------------------- */
 
   const perro: Specie = {
-  name: "Perro"
-}
+    name: "Perro"
+  }
 
-const gato: Specie = {
-  name: "Gato"
-}
+  const gato: Specie = {
+    name: "Gato"
+  }
 
   const species: Specie[] = [perro, gato];
   await prisma.specie.createMany({ data: species, skipDuplicates: true });
@@ -286,28 +286,53 @@ const gato: Specie = {
 
   /* ------------------------------- INSER PETS ------------------------------- */
 
+  // Pet 1
   const birthDatePet1 = new Date("2015-02-27");
-  const beagleAvatar = await prisma.specie.findUnique({
-    where: {
-      name: "Beagle"
-    },
-    include: {
-      race: {
-        include: {
-          avatar: true
-        }
-      }
-    }
+  const beagleAvatar = await prisma.race.findUnique({
+    where: { name: "Beagle" },
+    include: { avatar: true }
   });
 
-  console.log(beagleAvatar);
+  // console.log(beagleAvatar);
 
-  const pe1: Pet = {
+  const beagleAvatarId = beagleAvatar?.avatar[0].id;
+
+  // console.log(beagleAvatarId)
+
+  if (!beagleAvatarId)
+    throw new Error("Beagle avatar ID not found");
+
+  const pet1: Pet = {
     name: "Viejon",
     birthDate: birthDatePet1,
-    avatarId: "",
-    userId: ""
+    avatarId: beagleAvatarId,
+    userId: createdUser1.id
   }
+
+  // Pet 2
+  const birthDatePet2 = new Date("2015-02-10");
+  const siamesAvatar = await prisma.race.findUnique({
+    where: { name: "Siamés" },
+    include: { avatar: true }
+  });
+
+  // console.log(siamesAvatar);
+
+  const siamesAvatarId = siamesAvatar?.avatar[0].id;
+
+  // console.log(siamesAvatarId);
+
+  if(!siamesAvatarId)
+    throw new Error("Siames avatar ID not found");
+
+  const pet2: Pet = {
+    name: "Candy",
+    birthDate: birthDatePet2,
+    avatarId: siamesAvatarId,
+    userId: createdUser2.id
+  }
+
+  await prisma.pet.createMany({ data: [pet1, pet2] })
 
   /* ---------------------------- INSERT REMINDERS ---------------------------- */
 

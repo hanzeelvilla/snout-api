@@ -1,0 +1,35 @@
+import Race from "../../types/race.interface";
+
+const defaultRaces: Race[] = [
+  { name: "Beagle", specieName: "Perro" },
+  { name: "Border-Collie", specieName: "Perro" },
+  { name: "Boxer", specieName: "Perro" },
+  { name: "Bulldog", specieName: "Perro" },
+  { name: "Chihuahua", specieName: "Perro" },
+  { name: "Cocker-Spaniel", specieName: "Perro" },
+  { name: "Doberman", specieName: "Perro" },
+  { name: "French-Bulldog", specieName: "Perro" },
+  { name: "Golden-Retriever", specieName: "Perro" },
+  { name: "Husky", specieName: "Perro" },
+  { name: "Labrador-Retriever", specieName: "Perro" },
+  { name: "Pastor-Alemán", specieName: "Perro" },
+  { name: "Pitbull", specieName: "Perro" },
+  { name: "Pug", specieName: "Perro" },
+  { name: "Rottweiler", specieName: "Perro" },
+  { name: "Salchicha", specieName: "Perro" },
+  { name: "Shih-Tzu", specieName: "Perro" },
+  { name: "Abisinio", specieName: "Gato" },
+  { name: "Azul-ruso", specieName: "Gato" },
+  { name: "Bombay", specieName: "Gato" },
+  { name: "Bosque-Noruega", specieName: "Gato" },
+  { name: "British-Shorthair", specieName: "Gato" },
+  { name: "Devon-Rex", specieName: "Gato" },
+  { name: "Esfinge", specieName: "Gato" },
+  { name: "Pardo", specieName: "Gato" },
+  { name: "Maine-coon", specieName: "Gato" },
+  { name: "Persa", specieName: "Gato" },
+  { name: "Ragdoll", specieName: "Gato" },
+  { name: "Siamés", specieName: "Gato" },
+];
+
+export default defaultRaces;

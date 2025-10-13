@@ -1,190 +1,85 @@
 # Snout API
 
-API oficial de la mejor aplicación para cuidar a tu amigo peludo 🐶
-[Snout](https://github.com/hanzeelvilla/snout)
+Official API for [Snout](https://github.com/hanzeelvilla/snout) — The app to help you care for your friend 🐶
 
-## Requisitos
+## Requirements
 
-- [Node.js](https://nodejs.org/en) (versión 18.x o superior)
-- [npm](https://www.npmjs.com/)
-- Extensión de VS Code [REST CLIENT](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) (opcional)
-- [MySQL](https://www.mysql.com/) o algún otro manejador de bases de datos
+- [Node.js](https://nodejs.org/es) 18.x or higher
+- npm
+- [MySQL](https://www.mysql.com/) (or compatible DB)
+- VS Code [REST Client](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) extension(Optional)
 
-## Instalación
+## Installation
 
-Sigue estos pasos para configurar y ejecutar el proyecto en tu entorno local:
-
-1. Clona el respositorio
+### Clone the repository
 
 ```bash
-https://github.com/hanzeelvilla/snout-api.git
-```
-
-2. Navega al directorio del proyecto:
-
-```bash
+git clone https://github.com/hanzeelvilla/snout-api.git
 cd snout-api
 ```
 
-3. Instala las dependencias:
+### Install the dependencies
 
 ```bash
 npm install
 ```
 
-4. Crea la base de datos si no existe
+1. Open and edit `.env.example` with your settings. Then rename it to `.env`
 
-```sql
-CREATE DATABASE snout;
-```
-
-5. Crea un archivo `.env`
-
-```text
-DATABASE_URL="mysql://user:pswd@localhost:3306/snout"
-PORT=3000
-JWT_SECRET="CHIVAS>PUMAS"
-```
-
-> [!WARNING]
-> Recuerda cambiar tu username, pswd secret token y alguna otra configuración necesaria
-
-6. Aplica las migraciones de Prisma para crear las tablas automáticamente:
+2. Run Prisma migrations and generate the client
 
 ```bash
 npx prisma migrate dev
+npx prisma generate
 ```
 
-Esto leerá tu archivo [`prisma/schema.prisma`](prisma/schema.prisma) y aplicará las migraciones necesarias en la base de datos.
-
-> [!NOTE] Si es la primera vez que usas Prisma en el proyecto, también puedes generar el cliente Prisma con:
->
-> ```bash
-> npx prisma generate
-> ```
-
-7. Inicia el servidor:
+### Start the server
 
 ```bash
+# development
+npm run dev
+```
+
+```bash
+# production
 npm run build
 npm run start
 ```
 
-## SCRIPTS
+## Scripts
 
-Estos son los scripts útiles que puedes ejecutar en este proyecto:
+- `npm run dev` — start development server with hot-reload
+- `npm run build` — build for production
+- `npm run start` — start production server
+- `npm run seed` — populate DB with sample data
+- `npm run clear` — truncate/clear tables
 
-- **Levantar el servidor en modo desarrollo:**
+## Endpoints
 
-  ```bash
-  npm run dev
-  ```
+### Auth
 
-- **Construir el proyecto (TypeScript a JavaScript):**
+- POST /api/auth/sign-up — register (name, lastName, email, username, password, confirmPassword)
+- POST /api/auth/login — login (username, password) → returns JWT
 
-  ```bash
-  npm run build
-  ```
+### Pets
 
-- **Iniciar el servidor en producción:**
+- GET /api/mascotas — list authenticated user's pets (requires Authorization header)
+- GET /api/mascotas/:id — get pet by id (only owner)
+- POST /api/mascotas — create pet (name, birthDate YYYY-MM-DD, avatarId)
+- PUT /api/mascotas/:id — update pet (only owner)
+- DELETE /api/mascotas/:id — delete pet (only owner)
 
-  ```bash
-  npm run start
-  ```
+### Avatars
 
-- **Popular la base de datos con datos de ejemplo:**
+- GET /api/avatares — list avatars (ordered alphabetically by species then race)  
+  Optional query: `?especie=Perro` or `?especie=Gato` (case-insensitive)
 
-  ```bash
-  npm run seed
-  ```
+All endpoints that require authentication must include:
 
-- **Limpiar todas las tablas de la base de datos:**
-  ```bash
-  npm run clear
-  ```
+```bash
+Authorization: Bearer YOUR_JWT_TOKEN
+```
 
-> Puedes modificar o agregar más scripts en la sección `"scripts"` de tu archivo `package.json`.
+## Testing with REST Client
 
-## ENDPOINTS
-
-Endpoints principales de la API:
-
-### Autenticación
-
-- **Registro de usuario**
-
-  ```
-  POST /api/auth/sign-up
-  ```
-
-  Crea un nuevo usuario. Requiere: `name`, `lastName`, `email`, `username`, `password`, `confirmPassword`.
-
-- **Login**
-  ```
-  POST /api/auth/login
-  ```
-  Inicia sesión y devuelve un JWT. Requiere: `username`, `password`.
-
----
-
-### Mascotas
-
-- **Obtener todas las mascotas del usuario autenticado**
-
-  ```
-  GET /api/mascotas
-  ```
-
-  Requiere autenticación (JWT en header `Authorization`).
-
-- **Obtener una mascota por ID (solo si es tuya)**
-
-  ```
-  GET /api/mascotas/:id
-  ```
-
-  Requiere autenticación.
-
-- **Crear una nueva mascota**
-
-  ```
-  POST /api/mascotas
-  ```
-
-  Requiere autenticación. Campos: `name`, `birthDate` (YYYY-MM-DD), `avatarId`.
-
-- **Actualizar una mascota (solo si es tuya)**
-
-  ```
-  PUT /api/mascotas/:id
-  ```
-
-  Requiere autenticación. Solo el dueño puede actualizar.
-
-- **Eliminar una mascota (solo si es tuya)**
-  ```
-  DELETE /api/mascotas/:id
-  ```
-  Requiere autenticación. Solo el dueño puede eliminar.
-
----
-
-### Avatares
-
-- **Obtener todos los avatares (ordenados alfabéticamente)**
-  ```
-  GET /api/avatares
-  ```
-  Requiere autenticación.
-
-> Todos los endpoints que requieren autenticación deben incluir el header:
->
-> ```
-> Authorization: Bearer TU_JWT_TOKEN
-> ```
-
-Consulta el archivo `testEndpoints.rest` para ejemplos de uso con la extensión REST Client.
-
-## PROBAR LOS ENDPOINTS
-
-Si tienes la extensión [REST CLIENT](https://marketplace.visualstudio.com/items?itemName=humao.rest-client) de VS Code, puedes probar los endpoints con dando clic en cada petición.
+See `testEndpoints.rest` for ready-to-use requests (VS Code REST Client).

@@ -8,12 +8,12 @@ POST http://localhost:3000/api/auth/sign-up
 Content-Type: application/json
 
 {
-    "name":     "Hanzeel",
-    "lastName": "Villa",
-    "email":    "hvilla0@ucol.mx",
-    "username": "Walle",
-    "password": "12345678",
-    "confirmPassword": "12345678"
+    "name":     "Angel",
+    "lastName": "Verduzco",
+    "email":    "fakeemail@gmail.com",
+    "username": "AngelTop",
+    "password": "secretPswd_1234",
+    "confirmPassword": "secretPswd_1234"
 }
 
 ### 
@@ -23,13 +23,13 @@ POST http://localhost:3000/api/auth/login
 Content-Type: application/json
 
 {
-    "username": "Walle",
-    "password": "12345678"
+    "username": "angelTop",
+    "password": "secretPswd_1234"
 }
 
 ###
 
-# DEVOLVER MASCOTAS DEL USUARIO
+# GET USER'S PETS
 GET http://localhost:3000/api/mascotas
 Content-Type: application/json
 Authorization: Bearer YOUR_JWT_TOKEN
@@ -37,13 +37,13 @@ Authorization: Bearer YOUR_JWT_TOKEN
 
 ###
 
-# DEVOLVER MASCOTA POR ID
+# GET PET BY ID
 GET http://localhost:3000/api/mascotas/ID
 Content-Type: application/json
 Authorization: Bearer YOUR_JWT_TOKEN
 ###
 
-# CREAR UNA NUEVA MASCOTA
+# REGISTER A NEW PET
 POST http://localhost:3000/api/mascotas
 Content-Type: application/json
 Authorization: Bearer YOUR_JWT_TOKEN
@@ -56,7 +56,7 @@ Authorization: Bearer YOUR_JWT_TOKEN
 
 ###
 
-# ACTUALIZAR UNA MASCOTA
+# UPDATE A PET
 PUT http://localhost:3000/api/mascotas/ID
 Content-Type: application/json
 Authorization: Bearer YOUR_JWT_TOKEN
@@ -68,19 +68,21 @@ Authorization: Bearer YOUR_JWT_TOKEN
 
 ###
 
-# ELIMINAR UNA MASCOTA
+# DELETE A PET
 DELETE http://localhost:3000/api/mascotas/ID
 Content-Type: application/json
 Authorization: Bearer YOUR_JWT_TOKEN
 
 ###
 
-# DEVOLVER AVATARES
+# GET AVATARS
 GET http://localhost:3000/api/avatares
 Content-Type: application/json
 Authorization: Bearer YOUR_JWT_TOKEN
 
-## GET USER REMINDERS
+###
+
+# GET USER REMINDERS
 GET http://localhost:3000/api/reminders
 Content-Type: application/json
 Authorization: Bearer YOUR_JWT_TOKEN

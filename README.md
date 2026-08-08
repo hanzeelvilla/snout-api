@@ -1,48 +1,91 @@
+<h1 align="center">Snout API</h1>
 <p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+  <img src="images/snout-logo.png" width="140" alt="Snout logo" />
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+<p align="center">Backend REST API for <a href="https://github.com/hanzeelvilla/snout-app">Snout</a>, built with <a href="https://nestjs.com/">NestJS</a> and TypeScript.</p>
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+`snout-api` is the backend service that powers the Snout application. It is built on top of [NestJS](https://nestjs.com/) (v11) and TypeScript, and uses [pnpm](https://pnpm.io/) as its package manager. Data is persisted in a PostgreSQL 17 database, provisioned locally through Docker Compose.
+
+For the client application, see the frontend repository: [hanzeelvilla/snout-app](https://github.com/hanzeelvilla/snout-app).
+
+## Prerequisites
+
+Make sure you have the following installed before setting up the project:
+
+- [Node.js](https://nodejs.org/) 20 LTS or later
+- [pnpm](https://pnpm.io/installation)
+- [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) (used to run the local PostgreSQL database)
+- A PostgreSQL client, e.g. [TablePlus](https://tableplus.com/), if you want to inspect the database directly (optional)
 
 ## Project setup
 
-```bash
-$ pnpm install
-```
+1. **Clone the repository**
+
+   ```bash
+   git clone git@github.com:hanzeelvilla/snout-api.git
+   cd snout-api
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   pnpm install
+   ```
+
+3. **Configure environment variables**
+
+   Create a `.env` file in the project root (this file is gitignored) with the following variables:
+
+   ```bash
+   DB_PORT=5432
+   DB_NAME=snout
+   DB_PASSWORD=your-password
+   ```
+
+   These variables are consumed by `docker-compose.yaml` to configure the local PostgreSQL container.
+
+4. **Start the database**
+
+   ```bash
+   docker compose up -d db
+   ```
+
+   This starts a `postgres:17` container named `snout-db`, exposed on `${DB_PORT}` (default `5432`), with the database `${DB_NAME}`. Data is persisted to the `./postgres` directory on the host — treat it as generated state, not source, and never edit it by hand.
+
+5. **(Optional) Connect with TablePlus**
+
+   You can inspect the local database using any PostgreSQL client. Below is an example connection using TablePlus with the default values from the `.env` file above (Host: `localhost`, Port: `${DB_PORT}`, User: `postgres`, Database: `${DB_NAME}`):
+
+   <p align="center">
+     <img src="images/screenshot-tableplus.png" width="420" alt="TablePlus PostgreSQL connection example" />
+   </p>
+
+   > [!Note]
+   > The default PostgreSQL user is `postgres`
 
 ## Compile and run the project
 
 ```bash
-# development
+# development (no watch)
 $ pnpm run start
 
-# watch mode
+# watch mode (typical for local dev)
 $ pnpm run start:dev
 
-# production mode
+# debug mode (--inspect + watch)
+$ pnpm run start:debug
+
+# build
+$ pnpm run build
+
+# production mode (runs the compiled dist/main.js)
 $ pnpm run start:prod
 ```
+
+By default the app listens on `http://localhost:3000` (configurable via the `PORT` environment variable).
 
 ## Run tests
 
@@ -50,49 +93,44 @@ $ pnpm run start:prod
 # unit tests
 $ pnpm run test
 
-# e2e tests
-$ pnpm run test:e2e
+# unit tests in watch mode
+$ pnpm run test:watch
 
 # test coverage
 $ pnpm run test:cov
+
+# e2e tests
+$ pnpm run test:e2e
+
+# unit tests under the node inspector
+$ pnpm run test:debug
 ```
 
-## Deployment
+To run a single unit test file: `pnpm test -- app.controller.spec.ts`.
+To run a single e2e test file: `pnpm run test:e2e -- test/app.e2e-spec.ts`.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## Lint and format
 
 ```bash
-$ pnpm install -g @nestjs/mau
-$ mau deploy
+# lint (auto-fixes issues)
+$ pnpm run lint
+
+# format with Prettier
+$ pnpm run format
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+## Related repositories
+
+- Frontend / client app: [hanzeelvilla/snout-app](https://github.com/hanzeelvilla/snout-app)
 
 ## Resources
 
 Check out a few resources that may come in handy when working with NestJS:
 
 - Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
+- To dive deeper and get more hands-on experience, check out the official [courses](https://courses.nestjs.com/).
 - Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is UNLICENSED (private).

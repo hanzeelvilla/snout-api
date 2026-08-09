@@ -41,6 +41,7 @@ Make sure you have the following installed before setting up the project:
 
    ```bash
    DB_PORT=5432
+   DB_HOST=localhost
    DB_NAME=snout
    DB_PASSWORD=your-password
    ```

@@ -1,4 +1,4 @@
-name: Hello Word Manual
+name: Hello Word Manual con inputs
 
 on:
   workflow_dispatch:

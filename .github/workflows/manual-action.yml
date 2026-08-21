@@ -1,0 +1,17 @@
+name: Hello Word Manual
+
+on:
+  workflow_dispatch: 
+
+jobs:
+  my-first-job:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Saludar
+        run: echo "Hola desde GitHub Actions"
+
+      - name: Ver fecha del runner
+        run: date
+
+      - name: Ver archivos disponibles
+        run: ls -la

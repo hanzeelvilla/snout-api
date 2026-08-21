@@ -1,0 +1,57 @@
+name: Hello Word Manual
+
+on:
+  workflow_dispatch:
+    inputs:
+      log_level:
+        description: 'Nivel de log'
+        required: true
+        default: 'info'
+        type: choice
+        options:
+          - info
+          - debug
+          - warn
+          - error
+
+      environment:
+        description: 'Entorno'
+        type: environment
+
+      dry_run:
+        description: 'Ejecutar sin aplicar los cambios'
+        required: false
+        default: false
+        type: boolean
+
+      reason:
+        description: 'Motivo de la ejecución'
+        required: false
+        default: 'Ejecución manual'
+        type: string
+
+jobs:
+  my-first-job:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Mostrar todos los inputs
+        env:
+          LOG_LEVEL: ${{inputs.log_level}}
+          ENVIRONMENT: ${{inputs.environment}}
+          DRY_RUN: ${{inputs.dry_run}}
+          REASON: ${{inputs.reason}}
+        run: |
+          echo "Nivel de log: $LOG_LEVEL"
+          echo "Entorno: $ENVIRONMENT"
+          echo "Ejecución en modo dry run: $DRY_RUN"
+          echo "Motivo de la ejecución: $REASON"
+
+      - name: Deploy solo si no es dry run
+        if: ${{ !inputs.dry_run }}
+        env:
+          ENVIRONMENT: ${{inputs.environment}}
+        run: echo "Desplegando cambios en el entorno ${{ inputs.environment }}"
+
+      - name: Solo log si es dry run
+        if: ${{ inputs.dry_run }}
+        run: echo "Dry run activado, no se aplicarán cambios"

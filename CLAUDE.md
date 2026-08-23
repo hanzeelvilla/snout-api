@@ -52,4 +52,4 @@ Requires a `.env` with `DB_PORT`, `DB_NAME`, `DB_PASSWORD` (gitignored). The `./
 
 ## Lint/format
 
-ESLint flat config (`eslint.config.mjs`) extends `typescript-eslint` recommendedTypeChecked + `eslint-plugin-prettier`, with `@typescript-eslint/no-explicit-any` off and `no-floating-promises`/`no-unsafe-argument` downgraded to warnings. Prettier config (`.prettierrc`): single quotes, trailing commas everywhere. `pnpm run lint` auto-fixes.
+ESLint flat config (`eslint.config.mjs`) extends `typescript-eslint` recommendedTypeChecked + `eslint-plugin-prettier`, with `@typescript-eslint/no-explicit-any` off and `no-floating-promises`/`no-unsafe-argument` downgraded to warnings. Prettier config (`.prettierrc`): double quotes, trailing commas everywhere. `pnpm run lint` auto-fixes.

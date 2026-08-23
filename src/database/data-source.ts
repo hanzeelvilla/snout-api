@@ -1,17 +1,17 @@
-import { DataSource, DataSourceOptions } from 'typeorm';
-import { config } from 'dotenv';
+import { DataSource, DataSourceOptions } from "typeorm";
+import { config } from "dotenv";
 
 config();
 
 export const dataSourceOptions: DataSourceOptions = {
-  type: 'postgres',
+  type: "postgres",
   database: process.env.DB_NAME,
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT) || 5432,
-  username: process.env.DB_USERNAME || 'postgres',
+  username: process.env.DB_USERNAME || "postgres",
   password: process.env.DB_PASSWORD,
-  entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-  migrations: [__dirname + '/migrations/*{.ts,.js}'],
+  entities: [__dirname + "/../**/*.entity{.ts,.js}"],
+  migrations: [__dirname + "/migrations/*{.ts,.js}"],
   synchronize: false, // Set to false in production
   logging: false, // Set to true for debugging
 };

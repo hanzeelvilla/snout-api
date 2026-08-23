@@ -4,47 +4,47 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-} from 'typeorm';
+} from "typeorm";
 
-@Entity('users')
+@Entity("users")
 export class User {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @Column('text')
+  @Column("text")
   firstname!: string;
 
-  @Column('text')
+  @Column("text")
   paternalLastName!: string;
 
-  @Column('text')
+  @Column("text")
   maternalLastName!: string;
 
-  @Column('date')
+  @Column("date")
   dateOfBirth!: Date;
 
-  @Column('text', { unique: true })
+  @Column("text", { unique: true })
   email!: string;
 
-  @Column('char', { length: 2 })
+  @Column("char", { length: 2 })
   countryCode!: string;
 
-  @Column('text', { unique: true })
+  @Column("text", { unique: true })
   phoneNumber!: string;
 
-  @Column('text', { select: false })
+  @Column("text", { select: false })
   password!: string;
 
-  @Column('boolean', { default: true })
+  @Column("boolean", { default: true })
   isActive!: boolean;
 
   @CreateDateColumn({
-    name: 'created_at',
+    name: "created_at",
   })
   createdAt!: Date;
 
   @UpdateDateColumn({
-    name: 'updated_at',
+    name: "updated_at",
   })
   updatedAt!: Date;
 }

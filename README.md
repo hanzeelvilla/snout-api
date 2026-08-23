@@ -118,6 +118,9 @@ $ pnpm run lint
 
 # format with Prettier
 $ pnpm run format
+
+# check formatting without writing changes (used in CI)
+$ pnpm run format:check
 ```
 
 ## Related repositories
